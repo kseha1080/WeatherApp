@@ -7,7 +7,7 @@ export default {
     left: '50%',
     transform: 'translate(-50%, -50%)',
     textAlign: 'center',
-    backgroundColor: '#000',
+    backgroundColor: '#EEE9E8',
     width: '100vw',
     height: '100vh',
     zIndex: '999',
