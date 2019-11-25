@@ -1,22 +1,27 @@
 import React from 'react';
 import { Spinner } from 'reactstrap';
+import PropTypes from 'prop-types';
 
 // Material UI
 import { withStyles } from '@material-ui/core/styles';
 // import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
 
 // Styles
 import loaderStyles from './loaderStyles';
 
 const Loader = ({ classes }) => {
   return (
-    <div className={classes.loaderContainer}>
-      <Grid className={classes.loaderWrapper}>
+    <Box className={classes.loaderContainer}>
+      <Box className={classes.loaderWrapper}>
         <Spinner className={classes.loader} color='warning' size='lg' />
-      </Grid>
-    </div>
+      </Box>
+    </Box>
   );
+};
+
+Loader.propTypes = {
+  classes: PropTypes.object,
 };
 
 export default withStyles(loaderStyles)(Loader);

@@ -1,5 +1,4 @@
 import axios from 'axios';
-import moment from 'moment';
 
 import * as API from '../api';
 import {
@@ -10,7 +9,10 @@ import {
   SET_RADIO_STATE,
   SET_PAGE_NO,
   GET_PAGINATED_WEATHER_DATA,
+  SET_SELECTED_WEATHER_DAY,
 } from './actionTypes';
+
+import { recontructWeatherData } from '../utils';
 
 export const requestStart = () => {
   return { type: REQUEST_START };
@@ -25,45 +27,8 @@ export const getWeatherData = (unitFormat) => (dispatch) => {
   axios
     .get(`${API.weatherApi}&units=${unitFormat}`)
     .then((res) => {
-      const weatherData = res.data.list;
-      let groupedWeatherData = [];
-      let dayWeatherData = [];
-
-      const newWeatherData = weatherData.map((weatherObj) => {
-        const weatherObjDate = moment
-          .unix(weatherObj.dt)
-          .utc()
-          .format('YYYY-MM-DD');
-        const weatherObjTime = moment
-          .unix(weatherObj.dt)
-          .utc()
-          .format('LT');
-        weatherObj.date = weatherObjDate;
-        weatherObj.time = weatherObjTime;
-        return weatherObj;
-      });
-
-      for (let weatherObj of newWeatherData) {
-        if (!dayWeatherData.length) {
-          dayWeatherData.push(weatherObj);
-        } else {
-          if (dayWeatherData[0].date === weatherObj.date) {
-            dayWeatherData.push(weatherObj);
-            if (
-              newWeatherData.indexOf(weatherObj) ===
-              newWeatherData.length - 1
-            ) {
-              groupedWeatherData.push(dayWeatherData);
-            }
-          } else {
-            groupedWeatherData.push(dayWeatherData);
-            dayWeatherData = [];
-            dayWeatherData.push(weatherObj);
-          }
-        }
-      }
-
-      dispatch({ type: GET_WEATHER_DATA, payload: groupedWeatherData });
+      const reconstructedWeatherData = recontructWeatherData(res.data.list);
+      dispatch({ type: GET_WEATHER_DATA, payload: reconstructedWeatherData });
     })
     .catch((err) => {
       dispatch({ type: API_ERROR, payload: err });
@@ -83,4 +48,8 @@ export const setRadioState = (state) => (dispatch) => {
 
 export const setPageNo = (pageNo) => (dispatch) => {
   dispatch({ type: SET_PAGE_NO, payload: pageNo });
+};
+
+export const setSelectedWeatherDay = (selectedWeather) => (dispatch) => {
+  dispatch({ type: SET_SELECTED_WEATHER_DAY, payload: selectedWeather });
 };

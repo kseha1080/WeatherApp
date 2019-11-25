@@ -2,29 +2,36 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 // Material UI
+import { withStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 
 // Custom components
 import WeatherCard from './components/WeatherCard';
 
-const WeatherCardLayout = ({ data, pageNo }) => {
+// Styles
+import weatherCardLayoutStyles from './weatherCardLayoutStyles';
+
+const WeatherCardLayout = ({ classes, data, pageNo }) => {
+  const mapDataToWeatherCard = (weatherData) => {
+    return weatherData.map((weatherObj) => {
+      return <WeatherCard key={weatherObj.date} data={weatherObj} />;
+    });
+  };
+
   const renderWeatherCard =
-    data && data.length
-      ? data[pageNo].map((weatherObj) => {
-          return <WeatherCard key={weatherObj.date} data={weatherObj} />;
-        })
-      : null;
+    data && data.length ? mapDataToWeatherCard(data[pageNo]) : null;
 
   return (
-    <Container style={{ display: 'flex', justifyContent: 'space-evenly' }}>
+    <Container className={classes.layoutContainer}>
       {renderWeatherCard}
     </Container>
   );
 };
 
 WeatherCardLayout.propTypes = {
-  data: PropTypes.array.isRequired,
-  pageNo: PropTypes.number.isRequired,
+  classes: PropTypes.object,
+  data: PropTypes.array,
+  pageNo: PropTypes.number,
 };
 
-export default WeatherCardLayout;
+export default withStyles(weatherCardLayoutStyles)(WeatherCardLayout);

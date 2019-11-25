@@ -10,7 +10,10 @@ export const REQUEST_COMPLETE = 'REQUEST_COMPLETE';
 export const API_ERROR = 'API_ERROR';
 
 // Set radio state
-export const SET_RADIO_STATE = 'SET_RADIO_STATE'
+export const SET_RADIO_STATE = 'SET_RADIO_STATE';
 
 // Pagination
 export const SET_PAGE_NO = 'SET_PAGE_NO';
+
+// Set selected weather info
+export const SET_SELECTED_WEATHER_DAY = 'SET_SELECTED_WEATHER_DAY';

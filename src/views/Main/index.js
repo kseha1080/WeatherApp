@@ -18,6 +18,7 @@ import {
 import RadioGroupComponent from '../../components/RadioGroupComponent';
 import PaginationButtons from '../../components/PaginationButtons';
 import WeatherCardLayout from '../../components/WeatherCardLayout';
+import BarChart from '../../components/BarChart';
 
 // Constants import
 import { unitFormatOptions } from '../../constants';
@@ -50,36 +51,18 @@ class Main extends PureComponent {
     getWeatherData(newUnitFormat);
   };
 
-  // Fn to paginate weather arrays for PaginationButtons and WeatherCard
+  // Fn to paginate weather arrays
   constructPaginatedWeatherData = (weatherData, pageSize) => {
     let paginatedWeatherData = [];
     let dataPage = [];
 
-    const objConvertedWeatherData = weatherData.map((dataArray) => {
-      let weatherObjDay = {};
-      let meanTemp = 0;
-      for (let weatherObj of dataArray) {
-        meanTemp += weatherObj.main.temp;
-        weatherObjDay.date = weatherObj.date;
-        weatherObjDay.humidity = weatherObj.main.humidity;
-        weatherObjDay.weather = weatherObj.weather[0].main;
-      }
-      meanTemp = meanTemp / dataArray.length;
-      meanTemp = Math.round(meanTemp);
-      weatherObjDay.avg_temp = meanTemp;
-      return weatherObjDay;
-    });
-
-    for (let weatherObj of objConvertedWeatherData) {
+    for (let weatherObj of weatherData) {
       if (dataPage.length === pageSize) {
         paginatedWeatherData.push(dataPage);
         dataPage = [];
       }
       dataPage.push(weatherObj);
-      if (
-        objConvertedWeatherData.indexOf(weatherObj) ===
-        objConvertedWeatherData.length - 1
-      ) {
+      if (weatherData.indexOf(weatherObj) === weatherData.length - 1) {
         paginatedWeatherData.push(dataPage);
       }
     }
@@ -88,10 +71,10 @@ class Main extends PureComponent {
   };
 
   render() {
-    console.log('MAIN', this.props);
     const {
       unitFormat,
       weatherData,
+      selectedWeatherDay,
       paginatedWeatherData,
       pageNo,
       setPageNo,
@@ -99,22 +82,28 @@ class Main extends PureComponent {
 
     return (
       <Container>
-        <Grid container>
+        <Grid container direction='row' justify='center' alignItems='center'>
           <RadioGroupComponent
             radioOptions={unitFormatOptions}
             selectedValue={unitFormat}
             handleChangeState={this.getNewWeatherData}
           />
         </Grid>
-        <Grid container>
+        <Grid container direction='row' justify='center' alignItems='center'>
           <PaginationButtons
             data={paginatedWeatherData}
             pageNo={pageNo}
             setPageNo={setPageNo}
           />
         </Grid>
-        <Grid container>
+        <Grid container direction='row' justify='center' alignItems='center'>
           <WeatherCardLayout data={paginatedWeatherData} pageNo={pageNo - 1} />
+        </Grid>
+        <Grid container direction='row' justify='center' alignItems='center'>
+          <BarChart
+            data={weatherData}
+            selectedWeatherDay={selectedWeatherDay}
+          />
         </Grid>
       </Container>
     );
@@ -126,6 +115,9 @@ Main.propTypes = {
   paginatedWeatherData: PropTypes.array,
   unitFormat: PropTypes.string,
   pageNo: PropTypes.number,
+  getWeatherData: PropTypes.func,
+  getPaginatedWeatherData: PropTypes.func,
+  setRadioState: PropTypes.func,
 };
 
 const mapStateToProps = ({
@@ -137,6 +129,7 @@ const mapStateToProps = ({
   paginatedWeatherData: weatherReducers.paginatedWeatherData,
   unitFormat: unitFormatReducers.unitFormat,
   pageNo: paginationReducers.pageNo,
+  selectedWeatherDay: weatherReducers.selectedWeatherDay,
 });
 
 export default connect(mapStateToProps, {

@@ -1,8 +1,6 @@
 export default {
   radioFormControl: {
-    margin: '0 auto'
+    marginTop: '2rem',
+    margin: '0 auto',
   },
-  radioOption: {
-    // fontSize: '10rem',
-  }
 }

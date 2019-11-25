@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
-// Material UI
 import Container from '@material-ui/core/Container';
 
 // Custom components
@@ -14,6 +14,10 @@ const AppContainer = ({ children, requestLoading }) => {
       {children}
     </Container>
   );
+};
+
+AppContainer.propTypes = {
+  requestLoading: PropTypes.bool,
 };
 
 const mapStateToProps = ({ loadingReducers }) => ({

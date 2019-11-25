@@ -25,7 +25,6 @@ const RadioGroupComponent = ({
         control={<Radio color='primary' />}
         label={option.label}
         labelPlacement={option.labelPlacement}
-        className={classes.radioOption}
       />
     );
   });
