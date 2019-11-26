@@ -1,19 +1,15 @@
 import React from 'react';
 
 // Material UI
-import { withStyles } from '@material-ui/core/styles';
-import ButtonGroup from '@material-ui/core/ButtonGroup';
+import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
 
 // Icons
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 
-import paginationButtonStyles from './paginationButtonStyles';
-
-const PaginationButtons = ({ classes, data, pageNo, setPageNo }) => {
+const PaginationButtons = ({ data, pageNo, setPageNo }) => {
   const handlePrevious = () => {
     const newPageNo = pageNo - 1;
     setPageNo(newPageNo);
@@ -26,10 +22,12 @@ const PaginationButtons = ({ classes, data, pageNo, setPageNo }) => {
 
   const renderPreviousBtn = pageNo > 1 && (
     <Button
+      variant='contained'
+      size='medium'
       color='primary'
-      style={{ borderRightColor: 'unset' }}
+      disableFocusRipple={true}
+      disableRipple={true}
       onClick={handlePrevious}
-      className={classes.paginationButton}
     >
       <ArrowBackIcon />
     </Button>
@@ -39,24 +37,37 @@ const PaginationButtons = ({ classes, data, pageNo, setPageNo }) => {
     data && data.length ? `${pageNo} of ${data.length}` : '0 of 0';
 
   const renderNextBtn = pageNo !== data.length && (
-    <Button onClick={handleNext} className={classes.paginationButton}>
+    <Button
+      variant='contained'
+      size='medium'
+      color='primary'
+      disableFocusRipple={true}
+      disableRipple={true}
+      onClick={handleNext}
+    >
       <ArrowForwardIcon />
     </Button>
   );
 
   return (
-    <ButtonGroup color='primary' className={classes.buttonsContainer}>
-      <Box className={classes.containerGrid}>
-      {renderPreviousBtn}
-      </Box>
-      <Box className={classes.containerGrid}>
+    <Grid
+      container
+      xs={12}
+      direction='row'
+      justify='center'
+      alignItems='center'
+    >
+      <Grid item xs={3} align='center'>
+        {renderPreviousBtn}
+      </Grid>
+      <Grid item xs={3} align='center'>
         <Typography color='textPrimary'>{renderPagination}</Typography>
-      </Box>
-      <Box className={classes.containerGrid}>
-      {renderNextBtn}
-      </Box>
-    </ButtonGroup>
+      </Grid>
+      <Grid item xs={3} align='center'>
+        {renderNextBtn}
+      </Grid>
+    </Grid>
   );
 };
 
-export default withStyles(paginationButtonStyles)(PaginationButtons);
+export default PaginationButtons;

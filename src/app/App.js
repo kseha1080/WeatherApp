@@ -1,8 +1,11 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 
 import store from './store';
+
+import theme from '../theme';
 
 // Custom components
 import AppContainer from '../views/AppContainer';
@@ -13,9 +16,11 @@ const App = () => {
     <Provider store={store}>
       <Router>
         <Switch>
-          <AppContainer>
-            <Route exact path='/' component={Main} />
-          </AppContainer>
+          <MuiThemeProvider theme={theme}>
+            <AppContainer>
+              <Route exact path='/' component={Main} />
+            </AppContainer>
+          </MuiThemeProvider>
         </Switch>
       </Router>
     </Provider>

@@ -4,7 +4,6 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 
 // Material UI
-import { withStyles } from '@material-ui/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
@@ -13,28 +12,29 @@ import Typography from '@material-ui/core/Typography';
 // Actions
 import { setSelectedWeatherDay } from '../../../actions';
 
-// Styles
-import weatherCardStyles from './weatherCardStyles';
-
-const WeatherCard = ({ classes, data, unitFormat, setSelectedWeatherDay }) => {
+const WeatherCard = ({ data, unitFormat, setSelectedWeatherDay }) => {
   const renderUnitFormat = unitFormat === 'imperial' ? 'F' : 'C';
 
   const formattedDate = moment(data.date).format('LL');
 
   return (
-    <Card className={classes.weatherCard} key={data.date} onClick={() => setSelectedWeatherDay(data.date)}>
+    <Card
+      key={data.date}
+      onClick={() => setSelectedWeatherDay(data.date)}
+      boxShadow={3}
+    >
       <CardActionArea>
         <CardContent>
-          <Typography gutterBottom component='h4'>
+          <Typography gutterBottom component='h5'>
             {formattedDate}
           </Typography>
-          <Typography variant='body2' color='textSecondary' component='p'>
+          <Typography variant='body1' component='p'>
             {`${data.meanTemp}˚ ${renderUnitFormat}`}
           </Typography>
-          <Typography variant='body2' color='textSecondary' component='p'>
+          <Typography variant='body1' color='textSecondary' component='p'>
             {data.weatherDescription}
           </Typography>
-          <Typography variant='body2' color='textSecondary' component='p'>
+          <Typography variant='body1' color='textSecondary' component='p'>
             {`Humidity: ${data.meanHumidity}`}
           </Typography>
         </CardContent>
@@ -54,6 +54,4 @@ const mapStateToProps = ({ unitFormatReducers }) => ({
   unitFormat: unitFormatReducers.unitFormat,
 });
 
-export default withStyles(weatherCardStyles)(
-  connect(mapStateToProps, { setSelectedWeatherDay })(WeatherCard),
-);
+export default connect(mapStateToProps, { setSelectedWeatherDay })(WeatherCard);

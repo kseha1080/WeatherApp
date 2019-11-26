@@ -7,6 +7,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
 
 // Custom Component
 import BarComponent from './components/BarComponent';
@@ -39,14 +40,25 @@ const BarChart = ({ classes, selectedWeatherDay, data }) => {
       : null;
 
   return (
-    <Container className={classes.barChartContainer}>
-      <Grid className={classes.barChartTitleWrapper}>
-        <Typography className={classes.barCharTitle} component='h3'>
+    <Grid container xs={12} 
+      className={classes.barChartContainer}
+    >
+      <Grid item 
+        className={classes.barChartTitleWrapper}
+      >
+        <Typography 
+          className={classes.barCharTitle} 
+          component='h4'
+        >
           {formattedSelectedDay}
         </Typography>
       </Grid>
-      <Grid className={classes.barChartWrapper}>{renderBarComponent}</Grid>
-    </Container>
+      <Grid item
+        className={classes.barChartWrapper}
+      >
+        {renderBarComponent}
+      </Grid>
+    </Grid>
   );
 };
 

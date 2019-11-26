@@ -1,10 +1,9 @@
 import React from 'react';
-import { Spinner } from 'reactstrap';
 import PropTypes from 'prop-types';
 
 // Material UI
 import { withStyles } from '@material-ui/core/styles';
-// import Container from '@material-ui/core/Container';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import Box from '@material-ui/core/Box';
 
 // Styles
@@ -14,7 +13,12 @@ const Loader = ({ classes }) => {
   return (
     <Box className={classes.loaderContainer}>
       <Box className={classes.loaderWrapper}>
-        <Spinner className={classes.loader} color='warning' size='lg' />
+        <CircularProgress
+          variant='indeterminate'
+          thickness={3.6}
+          size={80}
+          color='secondary'
+        />
       </Box>
     </Box>
   );

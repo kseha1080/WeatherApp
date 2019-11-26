@@ -81,31 +81,39 @@ class Main extends PureComponent {
     } = this.props;
 
     return (
-      <Container>
-        <Grid container direction='row' justify='center' alignItems='center'>
+      <Grid container spacing={2} direction='column'>
+        <Grid
+          item
+          xs={12}
+          direction='row'
+          justify='center'
+          alignItems='center'
+          style={{ display: 'flex' }}
+        >
           <RadioGroupComponent
             radioOptions={unitFormatOptions}
             selectedValue={unitFormat}
             handleChangeState={this.getNewWeatherData}
+            name='unitFormat'
           />
         </Grid>
-        <Grid container direction='row' justify='center' alignItems='center'>
+        <Grid item xs={12} direction='row' justify='center' alignItems='center'>
           <PaginationButtons
             data={paginatedWeatherData}
             pageNo={pageNo}
             setPageNo={setPageNo}
           />
         </Grid>
-        <Grid container direction='row' justify='center' alignItems='center'>
+        <Grid item xs={12} direction='row' justify='center' alignItems='center'>
           <WeatherCardLayout data={paginatedWeatherData} pageNo={pageNo - 1} />
         </Grid>
-        <Grid container direction='row' justify='center' alignItems='center'>
+        <Grid item xs={12} direction='row' justify='center' alignItems='center'>
           <BarChart
             data={weatherData}
             selectedWeatherDay={selectedWeatherDay}
           />
         </Grid>
-      </Container>
+      </Grid>
     );
   }
 }

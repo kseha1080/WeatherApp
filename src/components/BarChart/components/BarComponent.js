@@ -33,17 +33,31 @@ const BarComponent = ({ classes, data, unitFormat }) => {
   };
 
   return (
-    <Grid className={classes.barComponentWrapper}>
-      <Box className={classes.barComponentContent}>
+    <Grid item 
+    justify='center'
+    alignItems='center'
+    style={{display: 'flex'}}
+      className={classes.barComponentWrapper}
+    >
+      <Box 
+        className={classes.barComponentContent}
+      >
         <Typography
+          align='center'
           style={customStyles.barText}
           component='p'
+          display='block'
         >{`${roundedTemp}˚ ${renderUnitFormat}`}</Typography>
         <Box
           className={classes.barComponentBar}
           style={customStyles.barStyles}
         ></Box>
-        <Typography style={customStyles.barText} component='p'>
+        <Typography 
+          align='center'
+          style={customStyles.barText} 
+          component='p'
+          display='block'
+        >
           {data.time}
         </Typography>
       </Box>
